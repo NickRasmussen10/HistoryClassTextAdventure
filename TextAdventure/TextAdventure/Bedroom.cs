@@ -10,6 +10,8 @@ namespace TextAdventure
     {
         Player player;
         string response = "";
+        string error = "Whoops! Looks like I have no clue what you mean!";
+
 
         public Bedroom(Player p)
         {
@@ -21,10 +23,13 @@ namespace TextAdventure
             StartText();
             do
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 response = Console.ReadLine();
-                if(response != "go to notes" && response != "go to kitchen")
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
+                if (response != "go to notes" && response != "go to kitchen")
                 {
-                    Console.WriteLine("Whoops! Looks like I have no clue what you mean!");
+                    Console.WriteLine(error);
                 }
             }
             while (response != "go to notes" && response != "go to kitchen");
@@ -32,18 +37,16 @@ namespace TextAdventure
             switch (response)
             {
                 case "go to notes":
-                    ClearScreen();
                     Notes();
                     break;
                 case "go to kitchen":
-                    ClearScreen();
                     Kitchen();
                     break;
                 default:
+                    Console.WriteLine(error);
                     break;
             }
 
-            ClearScreen();
             ClassNotification();
 
             return player;
@@ -52,7 +55,7 @@ namespace TextAdventure
 
         void StartText()
         {
-            Console.WriteLine("You wake up to find out you're running late. \n" +
+            Console.WriteLine("You awaken to a blaring alarm and the realization that you're running late to History of Digital Graphics. \n" +
                 "You see your notes across the room and suddenly remember; your History of Digital Graphics presentation is today!. \n" +
                 "You glace over at the kitchen, and your stomach grumbles. ");
             player.PrintPlayer();
@@ -69,22 +72,25 @@ namespace TextAdventure
 
             do
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 response = Console.ReadLine();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
+                switch (response)
+                {
+                    case "study notes":
+                        Study();
+                        break;
+                    case "finish presentation":
+                        Presentation();
+                        break;
+                    default:
+                        Console.WriteLine(error);
+                        break;
+                }
             } while (response != "study notes" && response != "finish presentation");
 
-            switch (response)
-            {
-                case "study notes":
-                    ClearScreen();
-                    Study();
-                    break;
-                case "finish presentation":
-                    ClearScreen();
-                    Presentation();
-                    break;
-                default:
-                    break;
-            }
+
         }
 
         void Study()
@@ -121,7 +127,11 @@ namespace TextAdventure
             {
                 while (!hasEaten)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                     response = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    response = response.ToLower();
                     switch (response)
                     {
                         case "eat bowl":
@@ -144,15 +154,17 @@ namespace TextAdventure
                             {
                                 Console.WriteLine("You struggle to eat the orange. It tastes bitter and it's hard to chew.\n" +
                                     "Eventually you manage, and as you eat you passively wonder if maybe you should have peeled it first.");
+                                player.timeLeft -= 90;
                             }
                             hasEaten = true;
                             player.hunger++;
                             break;
                         case "peel orange":
                             Console.WriteLine("You dig into the orange's skin. It sprays acidic juices at you.");
+                            player.timeLeft -= 30;
                             hasPeeledOrange = true;
                             break;
-                        case "eat Lucky Charms":
+                        case "eat lucky charms":
                             if (!cerealInBowl)
                             {
                                 Console.WriteLine("You open the box of Lucky Charms and pour them straight into your mouth like a savage animal.\n" +
@@ -174,39 +186,74 @@ namespace TextAdventure
                             }
                             hasEaten = true;
                             break;
-                        case "pour Lucky Charms":
+                        case "pour lucky charms":
                             Console.WriteLine("You grab the box and begin to tilt it.\n" +
                                 "A series of hundreds of tiny clinking sounds erupts as the cereal hits the floor and disperses.\n" +
                                 "You stare blankly at the mess you've made.");
+                            player.timeLeft -= 15;
                             break;
-                        case "pour Lucky Charms in bowl":
+                        case "pour lucky charms in bowl":
                             Console.WriteLine("You pour a healthy portion of Lucky Charms in the bowl.");
                             cerealInBowl = true;
+                            player.timeLeft -= 15;
                             break;
                         case "drink milk":
                             Console.WriteLine("You open the milk carton and start chugging like the monster that you are.\n" +
                                 "Your roommate walks in and begins to verbally berate you.");
+                            player.hunger++;
+                            player.timeLeft -= 15;
                             hasEaten = true;
                             break;
                         case "pour milk":
                             Console.WriteLine("You pick up the milk carton and start pouring it out into the fridge.\n" +
                                 "Milk splashes and sloshes across every shelf and drawer of the fridge.\n" +
                                 "In your head, you silently nickname the disaster \"Calcium Falls\".");
+                            player.timeLeft -= 15;
                             break;
                         case "pour milk in bowl":
                             Console.WriteLine("You grab the milk and pour it in the bowl.");
                             milkInBowl = true;
+                            player.timeLeft -= 15;
                             break;
                         default:
+                            Console.WriteLine(error);
                             break;
                     }
+
+                    if (!hasEaten)
+                    {
+                        player.PrintPlayer();
+                    }
+
+
                 }
 
-            } while (response != "eat bowl" && response != "take bowl" && 
-                    response != "eat orange" && response != "peel orange" &&
-                    response != "eat Lucky Charms" && response != "pour Lucky Charms" && response != "pur Lucky Charms in bowl" &&
-                    response != "drink milk" && response != "pour milk" && response != "pour milk in bowl" &&
-                    !hasEaten);
+            } while (!hasEaten);
+
+            if (response == "drink milk")
+            {
+                do
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    response = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    switch (response)
+                    {
+                        case "throw milk at roommate":
+                            Console.WriteLine("You chuck the carton of milk at your roommate as hard as you can.\n" +
+                                "The milk makes perfect contact with their temple and spills all over them and the floor. \n" +
+                                "They slip and fall in the milk puddle.");
+                            break;
+                        case "run away":
+                            Console.WriteLine("You hiss at them and run back into your bedroom.");
+                            break;
+                        default:
+                            Console.WriteLine(error);
+                            break;
+                    }
+                } while (response != "throw milk at roommate" && response != "run away");
+            }
 
 
             player.confidence--;
@@ -214,32 +261,31 @@ namespace TextAdventure
 
         void ClassNotification()
         {
-            Console.WriteLine("Vrrrrr...vrrrrr...\n" +
-                "Your phone lights up in your pocket. You take it out and see a notification. \n" +
-                "HISTORY OF DIGITAL GRAPHICS: PRESENTATION DUE TODAY");
-            Console.Write("You need to get to the bus pronto");
-            if(player.hunger < 3)
+            string printStr = "Vrrrrr...vrrrrr...\n" +
+                "Your phone lights up in your pocket. You take it out and see a notification. \n\n" +
+                "HISTORY OF DIGITAL GRAPHICS: ";
+            if (player.confidence < 3)
             {
-                Console.Write(", but your stomach lets out a wretched grrrrRRRRRRR as you pack up your notes.");
+                printStr += "PRESENTATION DUE TODAY";
             }
-            else if(player.confidence < 3)
+            else if (player.hunger < 3)
             {
-                Console.Write(", but you glace over your notes and realize you can't even decipher about half of them.");
+                printStr += "6:00 PM";
+            }
+
+            printStr += "\n\nYou need to get to the bus pronto\n";
+            Console.Write(printStr);
+            if (player.hunger < 3)
+            {
+                Console.Write("but your stomach lets out a wretched grrrrRRRRRRR as you pack up your notes.");
+            }
+            else if (player.confidence < 3)
+            {
+                Console.Write("but you glace over your notes and realize you can't even decipher even half of them.");
             }
 
 
             player.PrintPlayer();
-        }
-
-
-
-
-        void ClearScreen()
-        {
-            for(int i = 0; i < 7; i++)
-            {
-                Console.WriteLine();
-            }
         }
     }
 }

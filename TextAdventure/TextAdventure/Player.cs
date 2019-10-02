@@ -14,7 +14,7 @@ namespace TextAdventure
         int maxHunger = 6;
         public int confidence;
         int maxConfidence = 6;
-        public float timeLeft = 1200;
+        public float timeLeft = 600;
         //public bool isDead;
 
         public Player(List<string> inv, int h, int c)
@@ -29,18 +29,27 @@ namespace TextAdventure
             ClampStats();
 
 
-            string printStr = "\n";
+            string printStr = "";
             Console.WriteLine();
-            printStr += "Inventory: ";
-            for (int i = 0; i < inventory.Count; i++)
+            Console.Write("Inventory: ");
+            if (inventory.Count == 0)
             {
-                printStr += inventory[i];
-                if (i != inventory.Count - 1)
+                printStr += "EMPTY";
+            }
+            else
+            {
+                for (int i = 0; i < inventory.Count; i++)
                 {
-                    printStr += ", ";
+                    printStr += inventory[i];
+                    if (i != inventory.Count - 1)
+                    {
+                        printStr += ", ";
+                    }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write(printStr);
+            Console.ForegroundColor = ConsoleColor.White;
 
             Console.Write("    Hunger: ");
             printStr = "";
