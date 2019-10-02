@@ -18,7 +18,7 @@ namespace TextAdventure
 
         public void PlayGame()
         {
-            bedroom.PlayBedroom();
+            player = bedroom.PlayBedroom();
         }
     }
 }

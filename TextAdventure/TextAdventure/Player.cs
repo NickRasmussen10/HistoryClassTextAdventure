@@ -10,12 +10,12 @@ namespace TextAdventure
     class Player
     {
         List<string> inventory;
-        int hunger;
-        public void SetHunger(int h) { hunger = h; }
-        int confidence;
-        public void SetConfidence(int c) { confidence = c; }
-
-        public bool isDead;
+        public int hunger;
+        int maxHunger = 6;
+        public int confidence;
+        int maxConfidence = 6;
+        public float timeLeft = 1200;
+        //public bool isDead;
 
         public Player(List<string> inv, int h, int c)
         {
@@ -26,13 +26,16 @@ namespace TextAdventure
 
         public void PrintPlayer()
         {
+            ClampStats();
+
+
             string printStr = "\n";
             Console.WriteLine();
             printStr += "Inventory: ";
-            for(int i = 0; i < inventory.Count; i++)
+            for (int i = 0; i < inventory.Count; i++)
             {
                 printStr += inventory[i];
-                if(i != inventory.Count - 1)
+                if (i != inventory.Count - 1)
                 {
                     printStr += ", ";
                 }
@@ -41,15 +44,15 @@ namespace TextAdventure
 
             Console.Write("    Hunger: ");
             printStr = "";
-            for(int i = 0; i < hunger; i++)
+            for (int i = 0; i < hunger; i++)
             {
                 printStr += "<> ";
             }
-            if(hunger < 3)
+            if (hunger < 3)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
-            else if(hunger == 3)
+            else if (hunger <= 4)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -62,7 +65,7 @@ namespace TextAdventure
 
             Console.Write("    Confidence: ");
             printStr = "";
-            for(int i = 0; i < confidence; i++)
+            for (int i = 0; i < confidence; i++)
             {
                 printStr += "<> ";
             }
@@ -70,7 +73,7 @@ namespace TextAdventure
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
-            else if (confidence == 3)
+            else if (confidence <= 4)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
@@ -80,7 +83,46 @@ namespace TextAdventure
             }
             Console.Write(printStr);
             Console.ForegroundColor = ConsoleColor.White;
+
+            TimeSpan time = TimeSpan.FromSeconds(timeLeft);
+            Console.Write("    Time until class: ");
+            if (timeLeft <= 5)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+            else if (timeLeft <= 10)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            Console.Write(time.ToString("mm':'ss"));
+            Console.ForegroundColor = ConsoleColor.White;
+
             Console.WriteLine();
+        }
+
+        void ClampStats()
+        {
+            if (hunger < 1)
+            {
+                hunger = 1;
+            }
+            else if (hunger > maxHunger)
+            {
+                hunger = maxHunger;
+            }
+
+            if (confidence < 1)
+            {
+                confidence = 1;
+            }
+            else if (confidence > maxConfidence)
+            {
+                confidence = maxConfidence;
+            }
         }
 
         public void AddItem(string item)
