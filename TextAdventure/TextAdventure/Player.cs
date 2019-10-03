@@ -15,7 +15,7 @@ namespace TextAdventure
         public int confidence;
         int maxConfidence = 6;
         public float timeLeft = 600;
-        //public bool isDead;
+        public bool isSick = false;
 
         public Player(List<string> inv, int h, int c)
         {
@@ -138,5 +138,20 @@ namespace TextAdventure
         {
             inventory.Add(item);
         }
+
+        public void RemoveItem(string item){
+            if(CheckInventory(item)){
+                inventory.Remove(item);
+            }
+        }
+
+        public bool CheckInventory(string item){
+            foreach (string i in inventory)
+	        {
+                if(i == item){ return true; }
+	        }
+            return false;
+        }
+
     }
 }
