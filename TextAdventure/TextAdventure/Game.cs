@@ -13,6 +13,7 @@ namespace TextAdventure
         public Game()
         {
             player = new Player(new List<string>(), 3, 3);
+            player.AddItem("phone");
             bedroom = new Bedroom(player);
         }
 

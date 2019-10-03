@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace TextAdventure
 {
-    class Bedroom
+    class Bedroom : Room
     {
-        Player player;
-        string response = "";
-        string error = "Whoops! Looks like I have no clue what you mean!";
-
-
         public Bedroom(Player p)
         {
             player = p;
@@ -84,12 +79,15 @@ namespace TextAdventure
                     case "finish presentation":
                         Presentation();
                         break;
+                    case "take notes":
+                        Console.WriteLine("Without even attempting to read them, you gather your notes.");
+                        break;
                     default:
                         Console.WriteLine(error);
                         break;
                 }
-            } while (response != "study notes" && response != "finish presentation");
-
+            } while (response != "study notes" && response != "finish presentation" && response != "take notes");
+            player.AddItem("notes");
 
         }
 
