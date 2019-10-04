@@ -20,8 +20,8 @@ namespace TextAdventure
             bool isStanding;
             isStanding = SitOrStand();
             Entertain();
-            BusStart();
-            CandyBar();
+            BusStart(isStanding);
+            CandyBar(isStanding);
             return player;
         }
 
@@ -38,14 +38,14 @@ namespace TextAdventure
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 response = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.White;                
+                Console.ForegroundColor = ConsoleColor.White;
                 switch (response)
                 {
                     case "sit":
                         Console.WriteLine("You take the seat and lean as far away from the sickly man as you can.");
                         Random r = new Random();
-                        bool sick = r.Next(0,1);
-                        player.isSick = sick;
+                        int sick = r.Next(0, 1);
+                        player.isSick = sick == 0 ? true : false;
                         player.timeLeft -= 15;
                         return false;
                         break;
@@ -66,13 +66,13 @@ namespace TextAdventure
         void Entertain(){
             Console.WriteLine("As you wait for everyone else to get on the bus, you start getting bored.");
             player.PrintPlayer();
+            bool entertained = false;
 
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 response = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
-                bool entertained = false;
                 switch (response)
                 {
                     case "use bowl":
@@ -114,7 +114,7 @@ namespace TextAdventure
             } while (!entertained); //ARE YOU NOT ENTERTAINED?
         }
 
-        void BusStart(){
+        void BusStart(bool isStanding){
             Console.Write("As you ");
             switch (storeResponse)
 	        {
@@ -146,7 +146,7 @@ namespace TextAdventure
             }
         }
 
-        void CandyBar(){
+        void CandyBar(bool isStanding){
             if(isStanding && storeResponse != "phone"){
                 Console.WriteLine("As you lie among the mess you've made, you notice an old candy bar underneath one of the seats.\n" + 
                     "It looks like it's been stepped on, and one end of the wrapper is ripped apart.");
@@ -158,11 +158,12 @@ namespace TextAdventure
 
             player.PrintPlayer();
 
-            do{
+            bool keepGoing = false;
+            do
+            {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 response = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.White;
-                bool keepGoing = false;
                 switch (response)
 	            {
                     case "eat candy bar":

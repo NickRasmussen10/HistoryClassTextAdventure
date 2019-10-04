@@ -8,6 +8,8 @@ namespace TextAdventure
 {
     class Bedroom : Room
     {
+        bool hasStudied = false;
+        bool hasEaten = false;
         public Bedroom(Player p)
         {
             player = p;
@@ -44,6 +46,48 @@ namespace TextAdventure
 
             ClassNotification();
 
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                response = Console.ReadLine();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
+
+                switch (response)
+                {
+                    case "go to kitchen":
+                        if (hasEaten)
+                        {
+                            Console.WriteLine("You already are breakfast.");
+                        }
+                        else
+                        {
+                            Kitchen();
+                        }
+                        break;
+                    case "go to notes":
+                        if (hasStudied)
+                        {
+                            Console.WriteLine("You already studied.");
+                        }
+                        else
+                        {
+                            Notes();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            } while (response != "go to bus");
+
+            if (!hasEaten)
+            {
+                Console.WriteLine("Skipping breakfast, you leave your apartment and head for the bus stop.");
+            }
+            else if (!hasStudied)
+            {
+                Console.WriteLine("Without looking at your notes, you leave your apartment and head for the bus stop.");
+            }
             return player;
         }
 
@@ -97,6 +141,7 @@ namespace TextAdventure
             player.confidence++;
             player.hunger--;
             player.timeLeft -= 120;
+            hasStudied = true;
         }
 
         void Presentation()
@@ -105,13 +150,13 @@ namespace TextAdventure
             player.confidence += 2;
             player.hunger--;
             player.timeLeft -= 180;
+            hasStudied = true;
         }
 
         void Kitchen()
         {
             player.timeLeft -= 15;
 
-            bool hasEaten = false;
             bool hasPeeledOrange = false;
             bool milkInBowl = false;
             bool cerealInBowl = false;
@@ -262,22 +307,22 @@ namespace TextAdventure
             string printStr = "Vrrrrr...vrrrrr...\n" +
                 "Your phone lights up in your pocket. You take it out and see a notification. \n\n" +
                 "HISTORY OF DIGITAL GRAPHICS: ";
-            if (player.confidence < 3)
+            if (!hasStudied)
             {
                 printStr += "PRESENTATION DUE TODAY";
             }
-            else if (player.hunger < 3)
+            else if (!hasEaten)
             {
                 printStr += "6:00 PM";
             }
 
             printStr += "\n\nYou need to get to the bus pronto\n";
             Console.Write(printStr);
-            if (player.hunger < 3)
+            if (!hasEaten)
             {
                 Console.Write("but your stomach lets out a wretched grrrrRRRRRRR as you pack up your notes.");
             }
-            else if (player.confidence < 3)
+            else if (!hasStudied)
             {
                 Console.Write("but you glace over your notes and realize you can't even decipher even half of them.");
             }
