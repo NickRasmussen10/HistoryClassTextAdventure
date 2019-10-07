@@ -14,5 +14,13 @@ namespace TextAdventure
             game.PlayGame();
             Console.Read();
         }
+
+        public static void ClearScreen()
+        {
+            for(int i = 0; i < 100; i++)
+            {
+                Console.WriteLine();
+            }
+        }
     }
 }

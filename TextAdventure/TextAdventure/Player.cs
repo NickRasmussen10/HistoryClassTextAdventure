@@ -17,6 +17,9 @@ namespace TextAdventure
         public float timeLeft = 600;
         public bool isSick = false;
 
+        public int grade = 80;
+        public bool inPresentation = false;
+
         public Player(List<string> inv, int h, int c)
         {
             inventory = inv;
@@ -93,22 +96,47 @@ namespace TextAdventure
             Console.Write(printStr);
             Console.ForegroundColor = ConsoleColor.White;
 
-            TimeSpan time = TimeSpan.FromSeconds(timeLeft);
-            Console.Write("    Time until class: ");
-            if (timeLeft <= 5)
+            if (!inPresentation)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                TimeSpan time = TimeSpan.FromSeconds(timeLeft);
+                Console.Write("    Time until class: ");
+                if (timeLeft <= 5)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else if (timeLeft <= 10)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                Console.Write(time.ToString("mm':'ss"));
+                Console.ForegroundColor = ConsoleColor.White;
             }
-            else if (timeLeft <= 10)
+
+            if (inPresentation)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("\nGrade: ");
+                if(grade > 90)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else if(grade > 80)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                }
+                else if(grade > 70)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                Console.Write(grade);
             }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-            }
-            Console.Write(time.ToString("mm':'ss"));
-            Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine();
         }
@@ -131,6 +159,15 @@ namespace TextAdventure
             else if (confidence > maxConfidence)
             {
                 confidence = maxConfidence;
+            }
+
+            if(grade < 0)
+            {
+                grade = 0;
+            }
+            else if(grade > 100)
+            {
+                grade = 100;
             }
         }
 
