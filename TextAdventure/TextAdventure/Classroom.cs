@@ -31,7 +31,7 @@ namespace TextAdventure
         void PlayPresentation()
         {
             Console.WriteLine("Text explaining why you have choices");
-            Console.WriteLine("Option 1: \n" +
+            Console.WriteLine("Start option: \n" +
                 "Tell a fun fact \n" +
                 "Tell a topical joke");
             bool nextQ = false;
@@ -46,6 +46,8 @@ namespace TextAdventure
                     case "tell fun fact":
                     case "tell a fun fact":
                     case "tell fact":
+                    case "fun fact":
+                    case "fact":
                         FunFact();
                         nextQ = true;
                         break;
@@ -53,6 +55,7 @@ namespace TextAdventure
                     case "tell topical joke":
                     case "tell a joke":
                     case "tell joke":
+                    case "joke":
                         TopicalJoke();
                         nextQ = true;
                         break;
@@ -63,20 +66,27 @@ namespace TextAdventure
             } while (!nextQ);
 
             nextQ = false;
-            Console.WriteLine("Option 2: \n" +
+            Console.WriteLine("Info option: \n" +
                 "Talk about technical details\n" +
                 "Show pictures");
             do
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                response = Console.ReadLine();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
                 switch (response)
                 {
                     case "talk about technical details":
                     case "talk about details":
                     case "talk details":
+                    case "talk":
                         TechnicalDetails();
                         nextQ = true;
                         break;
                     case "show pictures":
+                    case "show":
+                    case "pictures":
                         Pictures();
                         nextQ = true;
                         break;
@@ -87,11 +97,15 @@ namespace TextAdventure
             } while (!nextQ);
 
             nextQ = false;
-            Console.WriteLine("Option 3:\n" +
+            Console.WriteLine("Bored option:\n" +
                 "Demonstration\n" +
                 "Class poll");
             do
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                response = Console.ReadLine();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
                 switch (response)
                 {
                     case "demonstration":
@@ -113,22 +127,30 @@ namespace TextAdventure
             nextQ = false;
             if (player.hunger <= 3)
             {
-                Console.WriteLine("Option 4:\n" +
-                    "Ignore stomach\n" +
-                    "Make a joke about stomach");
+                Console.WriteLine("Hungry option:\n" +
+                    "Ignore your stomach\n" +
+                    "Make a joke about your stomach");
                 do
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    response = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
                     switch (response)
                     {
+                        case "ignore your stomach":
                         case "ignore stomach":
                         case "ignore":
                             IgnoreStomach();
                             nextQ = true;
                             break;
+                        case "make a joke about your stomach":
                         case "make a joke about stomach":
+                        case "make joke about your stomach":
                         case "make joke about stomach":
                         case "make a joke":
                         case "make joke":
+                        case "joke":
                             JokeStomach();
                             nextQ = true;
                             break;
@@ -143,21 +165,28 @@ namespace TextAdventure
 
             if (player.isSick)
             {
-                Console.WriteLine("Option 5:\n" +
+                Console.WriteLine("Sick option:\n" +
                     "Resist the urge to puke\n" +
                     "Puke in a trash can");
                 do
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    response = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
                     switch (response)
                     {
                         case "resist the urge to puke":
                         case "resist urge to puke":
                         case "resist urge":
+                        case "resist puke":
+                        case "resist":
                             RepressPuke();
                             nextQ = true;
                             break;
                         case "puke in trash can":
                         case "puke in trash":
+                        case "puke in can":
                         case "puke":
                             Puke();
                             nextQ = true;
@@ -167,7 +196,39 @@ namespace TextAdventure
                             break;
                     }
                 } while (!nextQ);
+                nextQ = false;
             }
+
+            Console.WriteLine("End option\n" +
+                "Improvise a song and dance\n" +
+                "Other option");
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                response = Console.ReadLine();
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.White;
+                switch (response)
+                {
+                    case "improvise a song and dance":
+                    case "improvise song and dance":
+                    case "improvise song":
+                    case "improvise dance":
+                    case "song and dance":
+                    case "song":
+                    case "dance":
+                        ImproviseSong();
+                        nextQ = true;
+                        break;
+                    case "other option":
+                        OtherThing();
+                        nextQ = true;
+                        break;
+                    default:
+                        Console.WriteLine(error);
+                        break;
+                }
+            } while (!nextQ);
         }
 
 
