@@ -39,6 +39,7 @@ namespace TextAdventure
             Console.WriteLine(" - Tell a fun fact \n" +
                 " - Tell a topical joke");
             bool nextQ = false;
+            player.PrintPlayer();
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -73,8 +74,11 @@ namespace TextAdventure
 
             if (player.hunger <= 3)
             {
+                Console.WriteLine("Just as your presentation is kicking off, you feel a starved grumbling from deep within your gut.\n" +
+                    "Glancing around, you notice half a sandwich relatively intact lays near the top of the garbage can.");
                 Console.WriteLine(" - Ignore your stomach\n" +
-                    " - Make a joke about your stomach");
+                    " - Eat sandwich");
+                player.PrintPlayer();
                 do
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -89,14 +93,10 @@ namespace TextAdventure
                             IgnoreStomach();
                             nextQ = true;
                             break;
-                        case "make a joke about your stomach":
-                        case "make a joke about stomach":
-                        case "make joke about your stomach":
-                        case "make joke about stomach":
-                        case "make a joke":
-                        case "make joke":
-                        case "joke":
-                            JokeStomach();
+                        case "eat sandwich":
+                        case "eat":
+                        case "sandwich":
+                            EatSandwich();
                             nextQ = true;
                             break;
                         default:
@@ -111,6 +111,7 @@ namespace TextAdventure
             Console.WriteLine("With the introduction out of the way, it's time to get some substance into the presentation.");
             Console.WriteLine(" - Talk about technical details\n" +
                 " - Show pictures");
+            player.PrintPlayer();
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -144,6 +145,7 @@ namespace TextAdventure
 
             Console.WriteLine(" - Demonstration\n" +
                 " - Class poll");
+            player.PrintPlayer();
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -175,6 +177,7 @@ namespace TextAdventure
                 Console.WriteLine("You're in the middle of an important talking point when you feel an unmistakable sensation. A sneeze is brewing.");
                 Console.WriteLine(" - Sneeze\n" +
                     " - Resist the urge to sneeze\n");
+                player.PrintPlayer();
                 do
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -206,7 +209,8 @@ namespace TextAdventure
             Console.WriteLine("You're finally nearing the finish line, time to end it with a bang.");
 
             Console.WriteLine(" - Improvise a song and dance\n" +
-                " - Other option");
+                " - Play a custom text adventure");
+            player.PrintPlayer();
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -226,7 +230,7 @@ namespace TextAdventure
                         nextQ = true;
                         break;
                     case "other option":
-                        OtherThing();
+                        TextAdventure();
                         nextQ = true;
                         break;
                     default:
@@ -254,7 +258,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("A few of your classmates lean forward with interested looks.");
                 player.grade += 5;
-                return true;
             }
             else
             {
@@ -264,7 +267,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Yikes.");
                 player.grade -= 3;
-                return false;
             }
         }
 
@@ -278,7 +280,6 @@ namespace TextAdventure
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("You get a few laughs.");
             player.grade += 3;
-            return true;
 
         }
 
@@ -294,7 +295,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("You professor silently jots down a note. It seems like it's positive");
                 player.grade += 5;
-                return true;
             }
             else
             {
@@ -304,7 +304,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("You professor jots down notes. Like a lot of notes. Theres no way that many notes could be positive feedback.");
                 player.grade -= 3;
-                return false;
             }
         }
 
@@ -321,7 +320,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("EpicGamer420 refuses to shut up as you panic click around the web browser. Eventually you just close the page and continue with the slides.");
                 player.grade -= 3;
-                return false;
             }
             else
             {
@@ -330,7 +328,6 @@ namespace TextAdventure
                     "At least, you think that's the Apple II and the Tandy TRS-80. All of these 80s computers look exactly the same." +
                     "Regardless, no one seems to be able to tell the difference.");
                 player.grade += 3;
-                return true;
             }
         }
 
@@ -344,7 +341,6 @@ namespace TextAdventure
                 Console.WriteLine("You bring up an emulator of Zork and start polling the class for actions.\n" +
                     "Hopefully they're engaged, because this part of our presentation will be pretty awkward if they aren't.");
                 player.grade += 5;
-                return true;
             }
             else
             {
@@ -354,7 +350,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("\"In what parallel universe would that have been a good idea?\" you think to yourself as your classmates hold back laughter.");
                 player.grade -= 3;
-                return false;
             }
         }
 
@@ -370,7 +365,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("A few people half-heartedly raise they're hands while avoiding eye contact.");
                 player.grade -= 3;
-                return false;
             }
             else
             {
@@ -384,7 +378,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Hey, that wasn't too bad!");
                 player.grade += 3;
-                return true;
             }
         }
 
@@ -397,7 +390,6 @@ namespace TextAdventure
                 Console.WriteLine("Without skipping a beat, you power through the abdominal protest and carry on.\n" +
                     "A few classmates in the front row seem to have noticed, but all in all it didn't create much distraction.");
                 player.grade += 5;
-                return true;
             }
             else
             {
@@ -406,22 +398,30 @@ namespace TextAdventure
                     "It only gets weirder when you continue talking as if nothing happened.");
                 player.grade -= 3;
                 player.confidence--;
-                return false;
             }
         }
 
-        void JokeStomach()
+        void EatSandwich()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if(outcome < 10)
             {
                 //bad outcome
-                return false;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("\"no no no NO NO NO NO NO\"");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("There are audible protests as you reach into the garbage and fish out the sandwich.\n" +
+                    "Unphased, you chomp down.");
+                player.hunger += 3;
+                player.confidence--;
             }
             else
             {
                 //good outcome
-                return true;
+                Console.WriteLine("An ungodly silence falls over the room as you grab the trash sandwich.\n" +
+                    "Your presentation grinds to a halt and over 30 people watch you chow down on actual garbage.");
+                player.hunger += 3;
+                player.confidence++;
             }
         }
 
@@ -432,7 +432,6 @@ namespace TextAdventure
             {
                 //good outcome
                 Console.WriteLine("Your presentation stops dead for a few moments as your face contorts into the beginnings of a sneeze, but you manage to stop it.");
-                return true;
             }
             else
             {
@@ -442,7 +441,6 @@ namespace TextAdventure
                     "The presentation closes, and it takes several minutes to get it back up, and some of the next has become jibberish.");
                 player.confidence--;
                 player.grade -= 3;
-                return false;
             }
         }
 
@@ -456,7 +454,6 @@ namespace TextAdventure
                 Console.WriteLine("You let yourself sneeze a little too freely, and end up smashing your head into you keyboard. \n" +
                     "You get the presentation back up within a few minutes, but a lot of the text has become jibberish.");
                 player.grade -= 3;
-                return false;
             }
             else
             {
@@ -467,7 +464,6 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("The sudden noise seems to have drawn the attention of a few classmates who had drifted off.");
                 player.confidence++;
-                return true;
             }
         }
 
@@ -482,7 +478,6 @@ namespace TextAdventure
 
                 Console.ForegroundColor = ConsoleColor.White;
                 player.grade += 5;
-                return true;
             }
             else
             {
@@ -492,14 +487,15 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("That didn't go anywhere close to as well as you thought it would.");
                 player.grade -= 3;
-                return false;
             }
         }
 
         //not confident
-        void OtherThing()
+        void TextAdventure()
         {
-            return false;
+            Console.WriteLine("You poll the class for actions as you play through a text adventure about the presentation you're currently giving.\n" +
+                "The professor loves the text adventure so much that she gives you an A+");
+            player.grade = 100;
         }
 
     }
