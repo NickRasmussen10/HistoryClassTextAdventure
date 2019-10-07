@@ -9,7 +9,6 @@ namespace TextAdventure
     class Classroom : Room
     {
         Random rng;
-        bool lastWasGood = false;
 
         public Classroom(Player p)
         {
@@ -34,11 +33,11 @@ namespace TextAdventure
 
         void PlayPresentation()
         {
+            player.inPresentation = true;
             Console.WriteLine("You stand at the front of the class and try to figure out how to get through this presentation.\n" +
                 "First things first - you need to grab the class's attention.");
-            Console.WriteLine("Start option: \n" +
-                "Tell a fun fact \n" +
-                "Tell a topical joke");
+            Console.WriteLine(" - Tell a fun fact \n" +
+                " - Tell a topical joke");
             bool nextQ = false;
             do
             {
@@ -53,7 +52,7 @@ namespace TextAdventure
                     case "tell fact":
                     case "fun fact":
                     case "fact":
-                        lastWasGood = FunFact();
+                        FunFact();
                         nextQ = true;
                         break;
                     case "tell a topical joke":
@@ -61,7 +60,7 @@ namespace TextAdventure
                     case "tell a joke":
                     case "tell joke":
                     case "joke":
-                        lastWasGood = TopicalJoke();
+                        TopicalJoke();
                         nextQ = true;
                         break;
                     default:
@@ -71,9 +70,47 @@ namespace TextAdventure
             } while (!nextQ);
 
             nextQ = false;
-            Console.WriteLine("Info option: \n" +
-                "Talk about technical details\n" +
-                "Show pictures");
+
+            if (player.hunger <= 3)
+            {
+                Console.WriteLine(" - Ignore your stomach\n" +
+                    " - Make a joke about your stomach");
+                do
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    response = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                    switch (response)
+                    {
+                        case "ignore your stomach":
+                        case "ignore stomach":
+                        case "ignore":
+                            IgnoreStomach();
+                            nextQ = true;
+                            break;
+                        case "make a joke about your stomach":
+                        case "make a joke about stomach":
+                        case "make joke about your stomach":
+                        case "make joke about stomach":
+                        case "make a joke":
+                        case "make joke":
+                        case "joke":
+                            JokeStomach();
+                            nextQ = true;
+                            break;
+                        default:
+                            Console.WriteLine(error);
+                            break;
+                    }
+                } while (!nextQ);
+
+                nextQ = false;
+            }
+
+            Console.WriteLine("With the introduction out of the way, it's time to get some substance into the presentation.");
+            Console.WriteLine(" - Talk about technical details\n" +
+                " - Show pictures");
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -86,13 +123,13 @@ namespace TextAdventure
                     case "talk about details":
                     case "talk details":
                     case "talk":
-                        lastWasGood = TechnicalDetails();
+                        TechnicalDetails();
                         nextQ = true;
                         break;
                     case "show pictures":
                     case "show":
                     case "pictures":
-                        lastWasGood = Pictures();
+                        Pictures();
                         nextQ = true;
                         break;
                     default:
@@ -102,9 +139,11 @@ namespace TextAdventure
             } while (!nextQ);
 
             nextQ = false;
-            Console.WriteLine("Bored option:\n" +
-                "Demonstration\n" +
-                "Class poll");
+
+            Console.WriteLine("It seems like you're losing the class's attention. You decide you need some audience interaction.");
+
+            Console.WriteLine(" - Demonstration\n" +
+                " - Class poll");
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -114,12 +153,12 @@ namespace TextAdventure
                 switch (response)
                 {
                     case "demonstration":
-                        lastWasGood = Demonstration();
+                        Demonstration();
                         nextQ = true;
                         break;
                     case "class poll":
                     case "poll":
-                        lastWasGood = Poll();
+                        Poll();
                         nextQ = true;
                         break;
                     default:
@@ -130,49 +169,12 @@ namespace TextAdventure
 
 
             nextQ = false;
-            if (player.hunger <= 3)
-            {
-                Console.WriteLine("Hungry option:\n" +
-                    "Ignore your stomach\n" +
-                    "Make a joke about your stomach");
-                do
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    response = Console.ReadLine();
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.White;
-                    switch (response)
-                    {
-                        case "ignore your stomach":
-                        case "ignore stomach":
-                        case "ignore":
-                            lastWasGood = IgnoreStomach();
-                            nextQ = true;
-                            break;
-                        case "make a joke about your stomach":
-                        case "make a joke about stomach":
-                        case "make joke about your stomach":
-                        case "make joke about stomach":
-                        case "make a joke":
-                        case "make joke":
-                        case "joke":
-                            lastWasGood = JokeStomach();
-                            nextQ = true;
-                            break;
-                        default:
-                            Console.WriteLine(error);
-                            break;
-                    }
-                } while (!nextQ);
-
-                nextQ = false;
-            }
 
             if (player.isSick)
             {
-                Console.WriteLine("Sick option:\n" +
-                    "Resist the urge to puke\n" +
-                    "Puke in a trash can");
+                Console.WriteLine("You're in the middle of an important talking point when you feel an unmistakable sensation. A sneeze is brewing.");
+                Console.WriteLine(" - Sneeze\n" +
+                    " - Resist the urge to sneeze\n");
                 do
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -181,19 +183,16 @@ namespace TextAdventure
                     Console.ForegroundColor = ConsoleColor.White;
                     switch (response)
                     {
-                        case "resist the urge to puke":
-                        case "resist urge to puke":
+                        case "resist the urge to sneeze":
+                        case "resist urge to sneeze":
                         case "resist urge":
-                        case "resist puke":
+                        case "resist seeze":
                         case "resist":
-                            lastWasGood = RepressSneeze();
+                            RepressSneeze();
                             nextQ = true;
                             break;
-                        case "puke in trash can":
-                        case "puke in trash":
-                        case "puke in can":
-                        case "puke":
-                            lastWasGood = Sneeze();
+                        case "sneeze":
+                            Sneeze();
                             nextQ = true;
                             break;
                         default:
@@ -204,9 +203,10 @@ namespace TextAdventure
                 nextQ = false;
             }
 
-            Console.WriteLine("End option\n" +
-                "Improvise a song and dance\n" +
-                "Other option");
+            Console.WriteLine("You're finally nearing the finish line, time to end it with a bang.");
+
+            Console.WriteLine(" - Improvise a song and dance\n" +
+                " - Other option");
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -222,11 +222,11 @@ namespace TextAdventure
                     case "song and dance":
                     case "song":
                     case "dance":
-                        lastWasGood = ImproviseSong();
+                        ImproviseSong();
                         nextQ = true;
                         break;
                     case "other option":
-                        lastWasGood = OtherThing();
+                        OtherThing();
                         nextQ = true;
                         break;
                     default:
@@ -243,7 +243,7 @@ namespace TextAdventure
 
 
         //confident
-        bool FunFact()
+        void FunFact()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome > 20)
@@ -269,7 +269,7 @@ namespace TextAdventure
         }
 
         //not confident
-        bool TopicalJoke()
+        void TopicalJoke()
         {
 
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -283,7 +283,7 @@ namespace TextAdventure
         }
 
         //confident
-        bool TechnicalDetails()
+        void TechnicalDetails()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome > 20)
@@ -309,7 +309,7 @@ namespace TextAdventure
         }
 
         //not confident
-        bool Pictures()
+        void Pictures()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome < 30)
@@ -335,7 +335,7 @@ namespace TextAdventure
         }
 
         //confident
-        bool Demonstration()
+        void Demonstration()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome > 20)
@@ -359,7 +359,7 @@ namespace TextAdventure
         }
 
         //not confident
-        bool Poll()
+        void Poll()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if(outcome < 10)
@@ -388,7 +388,7 @@ namespace TextAdventure
             }
         }
 
-        bool IgnoreStomach()
+        void IgnoreStomach()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome > 20)
@@ -405,12 +405,12 @@ namespace TextAdventure
                 Console.WriteLine("You stare blankly ahead for a full 15 seconds while trying to decide what to do.\n" +
                     "It only gets weirder when you continue talking as if nothing happened.");
                 player.grade -= 3;
-                player.confidence -= 2;
+                player.confidence--;
                 return false;
             }
         }
 
-        bool JokeStomach()
+        void JokeStomach()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if(outcome < 10)
@@ -425,7 +425,7 @@ namespace TextAdventure
             }
         }
 
-        bool RepressSneeze()
+        void RepressSneeze()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome > 20)
@@ -447,7 +447,7 @@ namespace TextAdventure
         }
 
 
-        bool Sneeze()
+        void Sneeze()
         {
             int outcome = rng.Next() * player.confidence;
             if(outcome < 10)
@@ -472,7 +472,7 @@ namespace TextAdventure
         }
 
         //confident
-        bool ImproviseSong()
+        void ImproviseSong()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
             if (outcome > 20)
@@ -497,7 +497,7 @@ namespace TextAdventure
         }
 
         //not confident
-        bool OtherThing()
+        void OtherThing()
         {
             return false;
         }
