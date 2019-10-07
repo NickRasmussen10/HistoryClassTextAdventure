@@ -30,6 +30,7 @@ namespace TextAdventure
                     case "go to notes":
                         if (!hasStudied)
                         {
+                            Program.ClearScreen();
                             Notes();
                         }
                         else { Console.WriteLine("You've already checked your notes."); }
@@ -41,6 +42,7 @@ namespace TextAdventure
                     case "go to kitchen":
                         if (!hasEaten)
                         {
+                            Program.ClearScreen();
                             Kitchen();
                         }
                         else { Console.WriteLine("You've already eaten breakfast."); }
@@ -171,8 +173,7 @@ namespace TextAdventure
             bool milkInBowl = false;
             bool cerealInBowl = false;
 
-            Console.WriteLine("Clutching your abdomen, you head to the kitchen.\n" +
-                "Perusing your options, you check through the kitchen.\n" +
+            Console.WriteLine("Clutching your abdomen, you head to the kitchen and peruse your options.\n" +
                 "In the cabinets, you find a box of Lucky Charms, an orange, and a bowl\n" +
                 "In the refrigerator, you see a carton of milk.");
             player.PrintPlayer();
@@ -314,12 +315,14 @@ namespace TextAdventure
                                 "They look shocked and begin to cower back, but it's too late. You jump forward and tackle them into a table with your full body weight.\n" +
                                 "You both crash through the table. In your blood-curdling rage, you hardly even notice. ");
                             fightOver = true;
+                            player.timeLeft -= 15;
                             break;
                         case "yell back":
                             Program.ClearScreen();
                             Console.WriteLine("You return the verbal barrage until both of you are simply screaming incoherent noises at each other.\n" +
                                 "You make wild hand gestures, paying no attention to the fact that you are still holding the milk. \n" +
                                 "By the end of the argument, milk has splattered across the entire apartment.");
+                            player.timeLeft -= 45;
                             fightOver = true;
                             break;
                         case "throw milk at roommate":
@@ -327,12 +330,14 @@ namespace TextAdventure
                             Console.WriteLine("You chuck the carton of milk at your roommate as hard as you can.\n" +
                                 "The milk makes perfect contact with their temple and spills all over them and the floor. \n" +
                                 "They slip and fall in the milk puddle.");
+                            player.timeLeft -= 30;
                             fightOver = true;
                             break;
                         case "run away":
                             Program.ClearScreen();
                             Console.WriteLine("You hiss at them and run back into your bedroom.");
                             fightOver = true;
+                            player.timeLeft -= 10; 
                             break;
                         default:
                             Console.WriteLine(error);
