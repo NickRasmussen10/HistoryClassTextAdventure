@@ -109,7 +109,7 @@ namespace Due_Date
         {
             Console.WriteLine("You awaken to a blaring alarm and the realization that you're running late to History of Digital Graphics. \n" +
                 "You see your notes across the room and suddenly remember; your History of Digital Graphics presentation is today! \n" +
-                "You glace over at the kitchen, and your stomach grumbles. \n" +
+                "You glance over at the kitchen, and your stomach grumbles. \n" +
                 "You check the time on your phone: 5:50. Your bus leaves soon.");
             player.PrintPlayer();
         }
