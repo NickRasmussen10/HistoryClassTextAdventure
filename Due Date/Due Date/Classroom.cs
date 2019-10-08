@@ -29,22 +29,32 @@ namespace Due_Date
             }
             PlayPresentation();
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            if (player.grade >= 90)
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Final Grade: ");
+            if(player.grade == 101)
             {
-                Console.WriteLine("Grade: A");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("A+");
+            }
+            else if (player.grade >= 90)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("Grade: A");
             }
             else if (player.grade >= 80)
             {
-                Console.WriteLine("Grade: B");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("Grade: B");
             }
             else if (player.grade >= 70)
             {
-                Console.WriteLine("Grade: C");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Grade: C");
             }
             else
             {
-                Console.WriteLine("Grade: F");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("Grade: F");
             }
             return player;
         }
@@ -335,7 +345,7 @@ namespace Due_Date
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("So yeah computers were like pretty bad back then.");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Rose jots down notes. Like a lot of notes. Theres no way that many notes could be positive feedback.");
+                Console.WriteLine("Rose jots down notes. Like a lot of notes. There's no way that many notes could be positive feedback.");
                 player.grade -= 3;
             }
         }
@@ -372,7 +382,7 @@ namespace Due_Date
             {
                 //good outcome
                 Console.WriteLine("You bring up a video of Dungeons of Daggorath and try to explain what's going on.\n" +
-                    "The class loves it, but Dungeons of Daggorath is a very good game.");
+                    "The class loves it, because Dungeons of Daggorath is a very good game.");
                 player.grade += 5;
             }
             else
@@ -396,7 +406,7 @@ namespace Due_Date
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("\"Who here has seen a video before...uh, video game before. Who plays video games?\"");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("A few people half-heartedly raise they're hands while avoiding eye contact.");
+                Console.WriteLine("A few people half-heartedly raise their hands while avoiding eye contact.");
                 player.grade -= 3;
             }
             else
@@ -470,8 +480,8 @@ namespace Due_Date
             else
             {
                 //bad outcome
-                Console.WriteLine("You presentation stops dead as your face contorts into the pre-sneeze expression. You try to fight it, but it only makes it worse.\n" +
-                    "As the sneeze forces it's way through, you instictively jerk your head forward and slam into your keyboard. \n" +
+                Console.WriteLine("Your presentation stops dead as your face contorts into the pre-sneeze expression. You try to fight it, but it only makes it worse.\n" +
+                    "As the sneeze forces its way through, you instinctively jerk your head forward and slam into your keyboard. \n" +
                     "The presentation closes, and it takes several minutes to get it back up, and some of the text has become gibberish.");
                 player.confidence--;
                 player.grade -= 3;
@@ -528,7 +538,7 @@ namespace Due_Date
         {
             Console.WriteLine("You poll the class for actions as you play through a text adventure about the presentation you're currently giving.\n" +
                 "The professor loves the text adventure so much that she gives you an A+");
-            player.grade = 100;
+            player.grade = 101;
         }
     }
 }
