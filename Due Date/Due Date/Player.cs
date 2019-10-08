@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventure
+namespace Due_Date
 {
-
     class Player
     {
         List<string> inventory;
@@ -31,22 +30,24 @@ namespace TextAdventure
         {
             ClampStats();
 
-
             string printStr = "";
-            Console.WriteLine();
-            Console.Write("Inventory: ");
-            if (inventory.Count == 0)
+            if (!inPresentation)
             {
-                printStr += "EMPTY";
-            }
-            else
-            {
-                for (int i = 0; i < inventory.Count; i++)
+                Console.WriteLine();
+                Console.Write("Inventory: ");
+                if (inventory.Count == 0)
                 {
-                    printStr += inventory[i];
-                    if (i != inventory.Count - 1)
+                    printStr += "EMPTY";
+                }
+                else
+                {
+                    for (int i = 0; i < inventory.Count; i++)
                     {
-                        printStr += ", ";
+                        printStr += inventory[i];
+                        if (i != inventory.Count - 1)
+                        {
+                            printStr += ", ";
+                        }
                     }
                 }
             }
@@ -119,15 +120,15 @@ namespace TextAdventure
             if (inPresentation)
             {
                 Console.Write("\nGrade: ");
-                if(grade > 90)
+                if (grade > 90)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                 }
-                else if(grade > 80)
+                else if (grade > 80)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                 }
-                else if(grade > 70)
+                else if (grade > 70)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
@@ -161,11 +162,11 @@ namespace TextAdventure
                 confidence = maxConfidence;
             }
 
-            if(grade < 0)
+            if (grade < 0)
             {
                 grade = 0;
             }
-            else if(grade > 100)
+            else if (grade > 100)
             {
                 grade = 100;
             }
@@ -176,19 +177,21 @@ namespace TextAdventure
             inventory.Add(item);
         }
 
-        public void RemoveItem(string item){
-            if(CheckInventory(item)){
+        public void RemoveItem(string item)
+        {
+            if (CheckInventory(item))
+            {
                 inventory.Remove(item);
             }
         }
 
-        public bool CheckInventory(string item){
+        public bool CheckInventory(string item)
+        {
             foreach (string i in inventory)
-	        {
-                if(i == item){ return true; }
-	        }
+            {
+                if (i == item) { return true; }
+            }
             return false;
         }
-
     }
 }

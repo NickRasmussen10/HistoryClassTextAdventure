@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventure
+namespace Due_Date
 {
     class Bedroom : Room
     {
@@ -20,18 +20,29 @@ namespace TextAdventure
             StartText();
             do
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                response = Console.ReadLine();
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.White;
+                if (response != "go to bus")
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    response = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
 
                 switch (response)
                 {
+                    case "use phone":
+                        Console.WriteLine("You check your phone. There's a few dozen messages from classmates asking where you are.");
+                        break;
                     case "go to notes":
                         if (!hasStudied)
                         {
                             Program.ClearScreen();
                             Notes();
+                            if (hasEaten)
+                            {
+                                Console.WriteLine("Having eaten and studied, you make a run for the bus stop.");
+                                response = "go to bus";
+                            }
                         }
                         else { Console.WriteLine("You've already checked your notes."); }
                         if (!hasEaten)
@@ -44,6 +55,11 @@ namespace TextAdventure
                         {
                             Program.ClearScreen();
                             Kitchen();
+                            if (hasStudied)
+                            {
+                                Console.WriteLine("Having eaten and studied, you make a run for the bus stop.");
+                                response = "go to bus";
+                            }
                         }
                         else { Console.WriteLine("You've already eaten breakfast."); }
                         if (!hasStudied)
@@ -52,26 +68,28 @@ namespace TextAdventure
                         }
                         break;
                     case "go to bus":
-                        if(!hasStudied && !hasEaten)
+                        
+                        if (!hasStudied && !hasEaten)
                         {
-                            if (!hasEaten && !hasStudied)
-                            {
-                                Console.WriteLine("You skip breakfast and leave your notes as you head to the bus stop.");
-                                player.confidence -= 2;
-                                player.hunger -= 2;
-                            }
-                            else if (!hasEaten)
-                            {
-                                Console.WriteLine("Skipping breakfast, you leave your apartment and head for the bus stop.");
-                            }
-                            else if (!hasStudied)
-                            {
-                                Console.WriteLine("Without looking at your notes, you leave your apartment and head for the bus stop.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("You head for the bus stop.");
-                            }
+                            Console.WriteLine("You skip breakfast and leave your notes as you head to the bus stop.");
+                            player.confidence -= 2;
+                            player.hunger -= 2;
+
+
+                        }
+                        else if (!hasEaten)
+                        {
+                            Program.ClearScreen();
+                            Console.WriteLine("Skipping breakfast, you leave your apartment and head for the bus stop.");
+                        }
+                        else if (!hasStudied)
+                        {
+                            Program.ClearScreen();
+                            Console.WriteLine("Without looking at your notes, you leave your apartment and head for the bus stop.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("You head for the bus stop.");
                         }
                         player.timeLeft -= 30;
                         break;
@@ -82,7 +100,7 @@ namespace TextAdventure
             }
             while (response != "go to bus");
 
-           
+
             return player;
         }
 
@@ -92,7 +110,7 @@ namespace TextAdventure
             Console.WriteLine("You awaken to a blaring alarm and the realization that you're running late to History of Digital Graphics. \n" +
                 "You see your notes across the room and suddenly remember; your History of Digital Graphics presentation is today! \n" +
                 "You glace over at the kitchen, and your stomach grumbles. \n" +
-                "You check the time on your phone: 6:20. Your bus leaves soon.");
+                "You check the time on your phone: 5:50. Your bus leaves soon.");
             player.PrintPlayer();
         }
 
@@ -118,6 +136,7 @@ namespace TextAdventure
                 switch (response)
                 {
                     case "study notes":
+                        
                         Program.ClearScreen();
                         Study();
                         break;
@@ -143,7 +162,7 @@ namespace TextAdventure
 
         void Study()
         {
-            Console.WriteLine("Like a cryptographer cracking a code, you attempt to decipher the scribblings you left yourself");
+            Console.WriteLine("Like a cryptographer cracking a code, you attempt to decipher the scribblings you left yourself.");
             player.confidence++;
             if (!hasEaten)
             {
@@ -155,7 +174,7 @@ namespace TextAdventure
 
         void Presentation()
         {
-            Console.WriteLine("Glancing at your notes, you attempt to assemble a few coherent slides");
+            Console.WriteLine("Glancing at your notes, you attempt to assemble a few coherent slides.");
             player.confidence += 2;
             if (!hasEaten)
             {
@@ -174,7 +193,7 @@ namespace TextAdventure
             bool cerealInBowl = false;
 
             Console.WriteLine("Clutching your abdomen, you head to the kitchen and peruse your options.\n" +
-                "In the cabinets, you find a box of Lucky Charms, an orange, and a bowl\n" +
+                "In the cabinets, you find a box of Lucky Charms, an orange, and a bowl.\n" +
                 "In the refrigerator, you see a carton of milk.");
             player.PrintPlayer();
             do
@@ -223,7 +242,7 @@ namespace TextAdventure
                             player.hunger++;
                             break;
                         case "peel orange":
-                            Console.WriteLine("You dig into the orange's skin. It sprays acidic juices at you.");
+                            Console.WriteLine("You dig into the orange's peel. It sprays acidic juices at you, but ultimately you win the battle.");
                             player.timeLeft -= 30;
                             hasPeeledOrange = true;
                             break;
@@ -310,6 +329,7 @@ namespace TextAdventure
                     switch (response)
                     {
                         case "fight roommate":
+                        case "fight":
                             Program.ClearScreen();
                             Console.WriteLine("You slam the milk into the ground and let out a war cry before charging at your roommate. \n" +
                                 "They look shocked and begin to cower back, but it's too late. You jump forward and tackle them into a table with your full body weight.\n" +
@@ -318,6 +338,8 @@ namespace TextAdventure
                             player.timeLeft -= 15;
                             break;
                         case "yell back":
+                        case "yell at roommate":
+                        case "yell":
                             Program.ClearScreen();
                             Console.WriteLine("You return the verbal barrage until both of you are simply screaming incoherent noises at each other.\n" +
                                 "You make wild hand gestures, paying no attention to the fact that you are still holding the milk. \n" +
@@ -337,7 +359,7 @@ namespace TextAdventure
                             Program.ClearScreen();
                             Console.WriteLine("You hiss at them and run back into your bedroom.");
                             fightOver = true;
-                            player.timeLeft -= 10; 
+                            player.timeLeft -= 10;
                             break;
                         default:
                             Console.WriteLine(error);
@@ -369,7 +391,7 @@ namespace TextAdventure
             }
             else if (!hasStudied)
             {
-                Console.Write("but you glace over your notes and realize you can't even decipher even half of them.");
+                Console.Write("but you glance over your notes and realize you can't even decipher even half of them.");
             }
 
 

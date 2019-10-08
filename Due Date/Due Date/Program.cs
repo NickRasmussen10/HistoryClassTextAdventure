@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventure
+namespace Due_Date
 {
     class Program
     {
@@ -17,7 +17,7 @@ namespace TextAdventure
 
         public static void ClearScreen()
         {
-            for(int i = 0; i < 100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Console.WriteLine();
             }

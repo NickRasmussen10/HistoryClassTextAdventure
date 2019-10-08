@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextAdventure
+namespace Due_Date
 {
     class Classroom : Room
     {
@@ -24,10 +24,28 @@ namespace TextAdventure
             }
             else
             {
-                Console.WriteLine("You enter the classroom late, and Professor Kahn glares at you as you set up for your presentation.");
+                Console.WriteLine("You enter the classroom late, and Rose glares at you as you set up for your presentation.");
                 player.confidence--;
             }
             PlayPresentation();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            if (player.grade >= 90)
+            {
+                Console.WriteLine("Grade: A");
+            }
+            else if (player.grade >= 80)
+            {
+                Console.WriteLine("Grade: B");
+            }
+            else if (player.grade >= 70)
+            {
+                Console.WriteLine("Grade: C");
+            }
+            else
+            {
+                Console.WriteLine("Grade: F");
+            }
             return player;
         }
 
@@ -53,6 +71,7 @@ namespace TextAdventure
                     case "tell fact":
                     case "fun fact":
                     case "fact":
+                        Program.ClearScreen();
                         FunFact();
                         nextQ = true;
                         break;
@@ -61,6 +80,7 @@ namespace TextAdventure
                     case "tell a joke":
                     case "tell joke":
                     case "joke":
+                        Program.ClearScreen();
                         TopicalJoke();
                         nextQ = true;
                         break;
@@ -90,12 +110,14 @@ namespace TextAdventure
                         case "ignore your stomach":
                         case "ignore stomach":
                         case "ignore":
+                            Program.ClearScreen();
                             IgnoreStomach();
                             nextQ = true;
                             break;
                         case "eat sandwich":
                         case "eat":
                         case "sandwich":
+                            Program.ClearScreen();
                             EatSandwich();
                             nextQ = true;
                             break;
@@ -124,12 +146,14 @@ namespace TextAdventure
                     case "talk about details":
                     case "talk details":
                     case "talk":
+                        Program.ClearScreen();
                         TechnicalDetails();
                         nextQ = true;
                         break;
                     case "show pictures":
                     case "show":
                     case "pictures":
+                        Program.ClearScreen();
                         Pictures();
                         nextQ = true;
                         break;
@@ -155,11 +179,13 @@ namespace TextAdventure
                 switch (response)
                 {
                     case "demonstration":
+                        Program.ClearScreen();
                         Demonstration();
                         nextQ = true;
                         break;
                     case "class poll":
                     case "poll":
+                        Program.ClearScreen();
                         Poll();
                         nextQ = true;
                         break;
@@ -191,10 +217,12 @@ namespace TextAdventure
                         case "resist urge":
                         case "resist seeze":
                         case "resist":
+                            Program.ClearScreen();
                             RepressSneeze();
                             nextQ = true;
                             break;
                         case "sneeze":
+                            Program.ClearScreen();
                             Sneeze();
                             nextQ = true;
                             break;
@@ -223,13 +251,19 @@ namespace TextAdventure
                     case "improvise song and dance":
                     case "improvise song":
                     case "improvise dance":
+                    case "improvise":
                     case "song and dance":
                     case "song":
                     case "dance":
+                        Program.ClearScreen();
                         ImproviseSong();
                         nextQ = true;
                         break;
-                    case "other option":
+                    case "play a custom text adventure":
+                    case "play custom text adventure":
+                    case "play text adventure":
+                    case "play":
+                        Program.ClearScreen();
                         TextAdventure();
                         nextQ = true;
                         break;
@@ -273,7 +307,6 @@ namespace TextAdventure
         //not confident
         void TopicalJoke()
         {
-
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\"What would you call a World War 2 game released for the best selling computer of all time?\"\n\n\n\n" +
                 "\"The Great War Encore for Commodore 64.\"");
@@ -293,16 +326,16 @@ namespace TextAdventure
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("\"'80s computers were limited by their low memory and slow processing speeds.\"");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("You professor silently jots down a note. It seems like it's positive");
+                Console.WriteLine("Rose silently jots down a note. It seems like it's positive");
                 player.grade += 5;
             }
             else
             {
                 //bad outcome
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("So yeah computers were like pretty crappy back then.");
+                Console.WriteLine("So yeah computers were like pretty bad back then.");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("You professor jots down notes. Like a lot of notes. Theres no way that many notes could be positive feedback.");
+                Console.WriteLine("Rose jots down notes. Like a lot of notes. Theres no way that many notes could be positive feedback.");
                 player.grade -= 3;
             }
         }
@@ -325,7 +358,7 @@ namespace TextAdventure
             {
                 //good outcome
                 Console.WriteLine("You pull up a few pictures of the Apple II and Tandy TRS-80. \n" +
-                    "At least, you think that's the Apple II and the Tandy TRS-80. All of these 80s computers look exactly the same." +
+                    "At least, you think that's the Apple II and the Tandy TRS-80. All of these 80s computers look exactly the same.\n" +
                     "Regardless, no one seems to be able to tell the difference.");
                 player.grade += 3;
             }
@@ -338,8 +371,8 @@ namespace TextAdventure
             if (outcome > 20)
             {
                 //good outcome
-                Console.WriteLine("You bring up an emulator of Zork and start polling the class for actions.\n" +
-                    "Hopefully they're engaged, because this part of our presentation will be pretty awkward if they aren't.");
+                Console.WriteLine("You bring up a video of Dungeons of Daggorath and try to explain what's going on.\n" +
+                    "The class loves it, but Dungeons of Daggorath is a very good game.");
                 player.grade += 5;
             }
             else
@@ -357,7 +390,7 @@ namespace TextAdventure
         void Poll()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
-            if(outcome < 10)
+            if (outcome < 10)
             {
                 //bad outcome
                 Console.ForegroundColor = ConsoleColor.Magenta;
@@ -390,6 +423,7 @@ namespace TextAdventure
                 Console.WriteLine("Without skipping a beat, you power through the abdominal protest and carry on.\n" +
                     "A few classmates in the front row seem to have noticed, but all in all it didn't create much distraction.");
                 player.grade += 5;
+                player.confidence++;
             }
             else
             {
@@ -404,10 +438,10 @@ namespace TextAdventure
         void EatSandwich()
         {
             int outcome = rng.Next(0, 11) * player.confidence;
-            if(outcome < 10)
+            if (outcome < 10)
             {
                 //bad outcome
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\"no no no NO NO NO NO NO\"");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("There are audible protests as you reach into the garbage and fish out the sandwich.\n" +
@@ -421,7 +455,7 @@ namespace TextAdventure
                 Console.WriteLine("An ungodly silence falls over the room as you grab the trash sandwich.\n" +
                     "Your presentation grinds to a halt and over 30 people watch you chow down on actual garbage.");
                 player.hunger += 3;
-                player.confidence++;
+                player.confidence += 2;
             }
         }
 
@@ -438,7 +472,7 @@ namespace TextAdventure
                 //bad outcome
                 Console.WriteLine("You presentation stops dead as your face contorts into the pre-sneeze expression. You try to fight it, but it only makes it worse.\n" +
                     "As the sneeze forces it's way through, you instictively jerk your head forward and slam into your keyboard. \n" +
-                    "The presentation closes, and it takes several minutes to get it back up, and some of the next has become jibberish.");
+                    "The presentation closes, and it takes several minutes to get it back up, and some of the text has become gibberish.");
                 player.confidence--;
                 player.grade -= 3;
             }
@@ -448,11 +482,11 @@ namespace TextAdventure
         void Sneeze()
         {
             int outcome = rng.Next() * player.confidence;
-            if(outcome < 10)
+            if (outcome < 10)
             {
                 //bad outcome
-                Console.WriteLine("You let yourself sneeze a little too freely, and end up smashing your head into you keyboard. \n" +
-                    "You get the presentation back up within a few minutes, but a lot of the text has become jibberish.");
+                Console.WriteLine("You let yourself sneeze a little too freely, and end up smashing your head into your keyboard. \n" +
+                    "You get the presentation back up within a few minutes, but a lot of the text has become gibberish.");
                 player.grade -= 3;
             }
             else
@@ -474,9 +508,8 @@ namespace TextAdventure
             if (outcome > 20)
             {
                 //good outcome
-                Console.ForegroundColor = ConsoleColor.Magenta;
-
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("You belt out a few references to 80s games in a way that somewhat rhymes while flailing your arms around.\n" + 
+                    "It's monumentally awkward, but most of the class at least appreciates the effort.");
                 player.grade += 5;
             }
             else
@@ -497,6 +530,5 @@ namespace TextAdventure
                 "The professor loves the text adventure so much that she gives you an A+");
             player.grade = 100;
         }
-
     }
 }
